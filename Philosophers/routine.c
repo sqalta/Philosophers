@@ -1,33 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   routine.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: spalta <spalta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/04 15:49:10 by serif             #+#    #+#             */
-/*   Updated: 2023/04/06 20:24:57 by spalta           ###   ########.fr       */
+/*   Created: 2023/04/06 16:14:30 by spalta            #+#    #+#             */
+/*   Updated: 2023/04/06 20:32:06 by spalta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int main (int ac, char **av)
+void *routine(void *philo)
 {
-	d_philo	*philo;
-	t_mutex *all_mutex;
+	d_philo *philo1;
 
-	if (cntrl_input(ac, av) == 0)
-	{
-		printf("Wrong input");
-		return (0);
-	}
-	philo = malloc(sizeof(d_philo) * ph_atoi(av[1]));
-	all_mutex = init_mutex(ac, av);
-	while (all_mutex->number == ph_atoi(av[1]))
-		all_mutex = all_mutex->next;
-	init_philo(ac, av, philo, all_mutex);
-	init_thread(ac, av, philo);
-	
-	
+	philo1 = philo;
+	pthread_mutex_lock(philo1->target->fork);
+	printf("%lld %d has taken a fork\n", get_time() - philo1->start_time, philo1->id);
+	pthread_mutex_lock(philo1->target->next->fork);
+	printf("%d has taken a fork\n", philo1->id);
+	usleep(2000000);
+	pthread_mutex_unlock(philo1->target->next->fork);
+	pthread_mutex_unlock(philo1->target->fork);
+	return (NULL);
 }

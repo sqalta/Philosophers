@@ -1,6 +1,6 @@
 NAME = philo
 
-SRC = main.c control_input.c
+SRC = main.c control_input.c init.c mutex.c routine.c
 
 CC = gcc
 
@@ -16,11 +16,18 @@ $(NAME): $(SRC)
 data races:
 	$(CC) $(FLAGS_DATARACE) $(SRC) -o $(NAME)
 
-clean:
+fclean:
 	rm -fr $(NAME)
 	rm -fr *.dSYM
 
-re:
-	clean all
+clean: fclean
+	
+re: fclean all
+
+git:
+	git add .
+	git status
+	git commit -m "First Try"
+	git push
 
 .PHONY: all clean re

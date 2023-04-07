@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mutex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: spalta <spalta@student.42.fr>              +#+  +:+       +#+        */
+/*   By: serif <serif@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 17:32:47 by spalta            #+#    #+#             */
-/*   Updated: 2023/04/06 20:18:49 by spalta           ###   ########.fr       */
+/*   Updated: 2023/04/07 17:11:25 by serif            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ t_mutex	*new_mutex(int i)
 	return (new);
 }
 
-t_mutex	*init_mutex(int ac, char **av)
+t_mutex	*init_mutex(char **av)
 {
 	t_mutex *all_mutex;
 	t_mutex	*iter;

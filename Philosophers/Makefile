@@ -1,6 +1,6 @@
 NAME = philo
 
-SRC = main.c control_input.c init.c mutex.c routine.c
+SRC = main.c control_input.c init.c mutex.c routine.c time.c
 
 CC = gcc
 

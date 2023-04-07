@@ -1,29 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   time.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: serif <serif@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/04 15:49:10 by serif             #+#    #+#             */
-/*   Updated: 2023/04/07 15:28:56 by serif            ###   ########.fr       */
+/*   Created: 2023/04/07 15:28:00 by serif             #+#    #+#             */
+/*   Updated: 2023/04/07 16:27:45 by serif            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-int main (int ac, char **av)
+time_t current_time()
 {
-	t_philo	*philo;
-	t_mutex *all_mutex;
+	
+}
 
-	if (cntrl_input(ac, av) == 0)
-	{
-		printf("Wrong input");
-		return (0);
-	}
-	philo = malloc(sizeof(t_philo) * ph_atoi(av[1]));
-	all_mutex = init_mutex(av);
-	init_philo(ac, av, philo, all_mutex);
-	init_thread(ac, av, philo);
+time_t	get_time()
+{
+	struct	timeval tv;
+	time_t			time;
+
+	gettimeofday(&tv, NULL);
+	time = tv.tv_sec * 1000 + tv.tv_usec / 1000;
+	return (time);
 }

@@ -3,26 +3,43 @@
 /*                                                        :::      ::::::::   */
 /*   routine.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: spalta <spalta@student.42.fr>              +#+  +:+       +#+        */
+/*   By: serif <serif@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 16:14:30 by spalta            #+#    #+#             */
-/*   Updated: 2023/04/06 20:32:06 by spalta           ###   ########.fr       */
+/*   Updated: 2023/04/07 17:04:34 by serif            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-void *routine(void *philo)
+int	philo_eat(t_philo *philo)
 {
-	d_philo *philo1;
+	pthread_mutex_lock(philo->target->fork);
+	printf ("%d->%s\n", philo->id, "Philo has taken a fork!");
+	pthread_mutex_lock(philo->target->next->fork);
+	printf ("%d->%s\n", philo->id, "Philo has taken a fork!");
+	usleep(800);
+	pthread_mutex_unlock(philo->target->fork);
+	pthread_mutex_unlock(philo->target->next->fork);
+	return(NULL);
+}
 
-	philo1 = philo;
-	pthread_mutex_lock(philo1->target->fork);
-	printf("%lld %d has taken a fork\n", get_time() - philo1->start_time, philo1->id);
-	pthread_mutex_lock(philo1->target->next->fork);
-	printf("%d has taken a fork\n", philo1->id);
-	usleep(2000000);
-	pthread_mutex_unlock(philo1->target->next->fork);
-	pthread_mutex_unlock(philo1->target->fork);
+int	philo_sleep(t_philo *philo)
+{
+	printf ("%s\n", "Philo is sleeping!");
+	return(1);	
+}
+
+int	philo_thinking(t_philo *philo)
+{
+	printf ("%s\n", "Philo is thinking!");
+	return(1);
+}
+void *routine(void *av)
+{
+	t_philo *philo;
+
+	philo = av;
+	while(1)
+		philo_eat(philo);
 	return (NULL);
 }

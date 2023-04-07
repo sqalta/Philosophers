@@ -6,7 +6,7 @@
 /*   By: serif <serif@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 16:14:30 by spalta            #+#    #+#             */
-/*   Updated: 2023/04/07 18:03:44 by serif            ###   ########.fr       */
+/*   Updated: 2023/04/07 18:24:52 by serif            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 int	philo_eat(t_philo *philo)
 {
 	pthread_mutex_lock(philo->target->fork);
-	printf ("%d->%s\n", philo->id, "Philo has taken a fork!");
+	printf ("%d->%s->%d\n", philo->id, "Philo has taken a fork!", philo->target->number);
 	pthread_mutex_lock(philo->target->next->fork);
-	printf ("%d->%s\n", philo->id, "Philo has taken a fork!");
-	sleep(1);
+	printf ("%d->%s->%d\n", philo->id, "Philo has taken a fork!", philo->target->next->number);
+	sleep(100);
 	pthread_mutex_unlock(philo->target->fork);
 	pthread_mutex_unlock(philo->target->next->fork);
 	return(1);
@@ -39,11 +39,10 @@ void *routine(void *av)
 	t_philo *philo;
 
 	philo = av;
-	while(1)
+	int i = 0;
+	while(i++ < 10)
 	{
 		philo_eat(philo);
-		philo_sleep(philo);
-		philo_thinking(philo);
 	}
 	return (NULL);
 }

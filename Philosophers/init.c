@@ -6,7 +6,7 @@
 /*   By: serif <serif@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 19:09:47 by serif             #+#    #+#             */
-/*   Updated: 2023/04/07 18:03:30 by serif            ###   ########.fr       */
+/*   Updated: 2023/04/07 18:22:52 by serif            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,13 @@ int	init_thread(int ac, char **av, t_philo	*philo)
 		pthread_create(&philo[i].th, NULL, &routine, &philo[i]);
 		ac++;
 		i++;
-		usleep(100);
 	}
-
-
-	
+	i = 0;
+	while (i < ph_atoi(av[1]))
+	{
+		pthread_join(philo[i].th, NULL);
+		i++;
+	}
 	return (1);
 }
 

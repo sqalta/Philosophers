@@ -6,7 +6,7 @@
 /*   By: serif <serif@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 15:49:10 by serif             #+#    #+#             */
-/*   Updated: 2023/04/07 15:28:56 by serif            ###   ########.fr       */
+/*   Updated: 2023/04/07 17:55:17 by serif            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 int main (int ac, char **av)
 {
+	pthread_t main_thread = NULL;
 	t_philo	*philo;
 	t_mutex *all_mutex;
 
@@ -26,4 +27,5 @@ int main (int ac, char **av)
 	all_mutex = init_mutex(av);
 	init_philo(ac, av, philo, all_mutex);
 	init_thread(ac, av, philo);
+	pthread_join(main_thread, NULL);
 }

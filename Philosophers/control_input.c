@@ -6,7 +6,7 @@
 /*   By: spalta <spalta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 15:52:16 by serif             #+#    #+#             */
-/*   Updated: 2023/04/06 18:44:41 by spalta           ###   ########.fr       */
+/*   Updated: 2023/04/08 16:33:16 by spalta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,16 @@ int	cntrl_input(int ac, char **av)
 		j = 0;
 		while (av[i][j])
 		{
-			if (!(av[i][j] > '0' && av[i][j] <= '9'))
+			if (!(av[i][j] >= '0' && av[i][j] <= '9'))
 				return (0);
 			j++;
 		}
+		if (j == 1)
+			if (av[i][0] == '0')
+				return (0);
 		i++;
 	}
+	if (ph_atoi(av[1]) > 200)
+		return (0);
 	return (1);
 }

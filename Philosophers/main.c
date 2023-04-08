@@ -6,7 +6,7 @@
 /*   By: spalta <spalta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 15:49:10 by serif             #+#    #+#             */
-/*   Updated: 2023/04/08 18:23:02 by spalta           ###   ########.fr       */
+/*   Updated: 2023/04/08 18:53:50 by spalta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 int main (int ac, char **av)
 {
-	t_philo	*philo;
-	t_mutex *all_mutex;
+	t_philo		*philo;
+	t_mutex 	*all_mutex;
 
 	if (cntrl_input(ac, av) == 0)
 	{

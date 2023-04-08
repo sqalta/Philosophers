@@ -3,21 +3,41 @@
 /*                                                        :::      ::::::::   */
 /*   routine.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: spalta <spalta@student.42.fr>              +#+  +:+       +#+        */
+/*   By: serif <serif@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 16:14:30 by spalta            #+#    #+#             */
-/*   Updated: 2023/04/08 19:30:09 by spalta           ###   ########.fr       */
+/*   Updated: 2023/04/09 02:32:59 by serif            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
+int	is_finish(t_philo *philo)
+{
+	if ((*philo->flag_die == 1 || philo->must_eat == 0) && print_die)
+	{
+		pthread_mutex_lock(philo->die);
+		if (print_die == 1)
+		{
+			printf("%ld %d is dead\n", get_time() - philo->start_dinner, philo->id);
+			print_die = 0;	
+		}
+		pthread_mutex_unlock(philo->die);
+		return (1);
+	}
+	return (0);
+}
+
 int	is_dead(t_philo *philo, int i)
 {
+	pthread_mutex_lock(philo->die);
 	if (i == 1 && ((get_time() - philo->start_dinner) > philo->time_to_die))
 		*philo->flag_die = 1;
 	else if (i == 2 && (get_time() - philo->last_meal) > philo->time_to_die)
 		*philo->flag_die = 1;
+	pthread_mutex_unlock(philo->die);
+	if (is_finish(philo))
+		return (1);
 	return (0);
 }
 
@@ -45,21 +65,19 @@ int	check_dead(t_philo	*philo)
 			is_dead(&philo[i], 1);
 		else
 			is_dead(&philo[i], 2);
+		i++;
 	}
+	return (1);
 }
 
 int	philo_eat(t_philo *philo)
 {
-	if (*philo->flag_die)
-	{
-		printf("%llu %d is died\n", get_time() - philo->start_dinner, philo->id);
-		return (-1);
-	}
 	pthread_mutex_lock(philo->target->fork);
-	printf("%llu %d has taken a fork\n", get_time() - philo->start_dinner, philo->id);
+	printf("%ld %d has taken a fork\n", get_time() - philo->start_dinner, philo->id);
 	pthread_mutex_lock(philo->target->next->fork);
-	printf("%llu %d has taken a fork\n", get_time() - philo->start_dinner, philo->id);
-	printf("%llu %d is eating\n", get_time() - philo->start_dinner, philo->id);
+	printf("%ld %d has taken a fork\n", get_time() - philo->start_dinner, philo->id);
+	printf("%ld %d is eating\n", get_time() - philo->start_dinner, philo->id);
+	philo->must_eat--;
 	time_to_wait(philo, 1);
 	pthread_mutex_unlock(philo->target->fork);
 	pthread_mutex_unlock(philo->target->next->fork);
@@ -69,14 +87,14 @@ int	philo_eat(t_philo *philo)
 
 int	philo_sleep(t_philo *philo)
 {
-	printf("%llu %d is sleeping\n", get_time() - philo->start_dinner, philo->id);
+	printf("%ld %d is sleeping\n", get_time() - philo->start_dinner, philo->id);
 	time_to_wait(philo, 2);
 	return(1);
 }
 
 int	philo_thinking(t_philo *philo)
 {
-	printf("%llu %d is thinking\n", get_time() - philo->start_dinner, philo->id);
+	printf("%ld %d is thinking\n", get_time() - philo->start_dinner, philo->id);
 	return(1);
 }
 void *routine(void *av)

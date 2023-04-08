@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: spalta <spalta@student.42.fr>              +#+  +:+       +#+        */
+/*   By: serif <serif@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 15:50:10 by serif             #+#    #+#             */
-/*   Updated: 2023/04/08 19:27:44 by spalta           ###   ########.fr       */
+/*   Updated: 2023/04/09 02:28:42 by serif            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <sys/time.h>
 # include <unistd.h>
 
+int print_die;
 
 typedef struct s_mutex
 {
@@ -37,6 +38,7 @@ typedef struct s_philo
 	int				flag_eat;
 	int				flag_sleep;
 	int				*flag_die;
+	int				print_die;
 	int				must_eat;
 	int				first_meal;
 	time_t			start_sleep;
@@ -45,17 +47,18 @@ typedef struct s_philo
 	time_t			last_meal;
 	t_mutex			*target;
 	pthread_t		th;
+	pthread_mutex_t	*die;
 } 					t_philo;
 
 int		cntrl_input(int ac, char **av);
 long	ph_atoi(const char *str);
-int		init_philo(int ac, char **av, t_philo	*philo, t_mutex *mutex);
+int		init_philo(int ac, char **av, t_philo	*philo, t_mutex *mutex, pthread_mutex_t *die);
 int		init_thread(char **av, t_philo	*philo);
 int		join_thread(char **av, t_philo	*philo);
 int		check_dead(t_philo	*philo);
 void	add_mutex(t_mutex *head, t_mutex *new);
 t_mutex	*new_mutex(int i);
-t_mutex	*init_mutex(char **av);
+t_mutex	*init_mutex(char **av, pthread_mutex_t *die);
 time_t	get_time();
 void 	*routine(void *av);
 

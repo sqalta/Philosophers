@@ -6,27 +6,11 @@
 /*   By: serif <serif@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 16:14:30 by spalta            #+#    #+#             */
-/*   Updated: 2023/04/09 02:32:59 by serif            ###   ########.fr       */
+/*   Updated: 2023/04/09 02:50:22 by serif            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-int	is_finish(t_philo *philo)
-{
-	if ((*philo->flag_die == 1 || philo->must_eat == 0) && print_die)
-	{
-		pthread_mutex_lock(philo->die);
-		if (print_die == 1)
-		{
-			printf("%ld %d is dead\n", get_time() - philo->start_dinner, philo->id);
-			print_die = 0;	
-		}
-		pthread_mutex_unlock(philo->die);
-		return (1);
-	}
-	return (0);
-}
 
 int	is_dead(t_philo *philo, int i)
 {
@@ -36,7 +20,7 @@ int	is_dead(t_philo *philo, int i)
 	else if (i == 2 && (get_time() - philo->last_meal) > philo->time_to_die)
 		*philo->flag_die = 1;
 	pthread_mutex_unlock(philo->die);
-	if (is_finish(philo))
+	if (*philo->flag_die == 1 && printf("%ld %d is dead\n", get_time() - philo->start_dinner, philo->id))
 		return (1);
 	return (0);
 }
@@ -62,9 +46,13 @@ int	check_dead(t_philo	*philo)
 	while (i < philo->total_philo)
 	{
 		if (philo[i].first_meal)
-			is_dead(&philo[i], 1);
+		{
+			if (is_dead(&philo[i], 1))
+				break;
+		}
 		else
-			is_dead(&philo[i], 2);
+			if (is_dead(&philo[i], 2))
+				break;
 		i++;
 	}
 	return (1);

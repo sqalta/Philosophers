@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mutex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: serif <serif@student.42.fr>                +#+  +:+       +#+        */
+/*   By: spalta <spalta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 17:32:47 by spalta            #+#    #+#             */
-/*   Updated: 2023/04/09 01:58:19 by serif            ###   ########.fr       */
+/*   Updated: 2023/04/09 21:12:18 by spalta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,15 @@ t_mutex	*new_mutex(int i)
 	return (new);
 }
 
-t_mutex	*init_mutex(char **av, pthread_mutex_t *die)
+t_mutex	*init_mutex(char **av, pthread_mutex_t *die, pthread_mutex_t *meal_mutex)
 {
 	t_mutex *all_mutex;
 	t_mutex	*iter;
 	int	i;
 
 	i = 0;
+	pthread_mutex_init(meal_mutex, NULL);
+
 	pthread_mutex_init(die, NULL);
 	all_mutex = new_mutex(i);
 	while (i < (ph_atoi(av[1]) - 1))

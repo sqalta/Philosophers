@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: serif <serif@student.42.fr>                +#+  +:+       +#+        */
+/*   By: spalta <spalta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 19:09:47 by serif             #+#    #+#             */
-/*   Updated: 2023/04/09 03:55:06 by serif            ###   ########.fr       */
+/*   Updated: 2023/04/09 21:17:03 by spalta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+#include <unistd.h>
+
 
 int	join_thread(char **av, t_philo	*philo)
 {
@@ -38,12 +40,20 @@ int	init_thread(char **av, t_philo	*philo)
 		i++;
 		usleep(100);
 	}
-	while (*philo->flag_die != 1)
-		check_dead(philo);
+	while (1)
+	{
+		if (check_dead(philo) == 1)
+		{
+			//pthread_mutex_unlock(philo->die);
+			pthread_mutex_unlock(philo->oc);
+			usleep(50);
+			return (-1);
+		}
+	}
 	return (0);
 }
 
-int	init_philo(int ac, char **av, t_philo	*philo, t_mutex *mutex, pthread_mutex_t *die)
+int	init_philo(int ac, char **av, t_philo	*philo, t_mutex *mutex, pthread_mutex_t *die, pthread_mutex_t *first_meal)
 {
 	int	i;
 	int	flag_die;
@@ -68,6 +78,7 @@ int	init_philo(int ac, char **av, t_philo	*philo, t_mutex *mutex, pthread_mutex_
 		philo[i].start_dinner = get_time();
 		philo[i].total_philo = ph_atoi(av[1]);
 		philo[i].die = die;
+		philo[i].meal_mutex = first_meal;
 		mutex = mutex->next;
 		i++;
 	}

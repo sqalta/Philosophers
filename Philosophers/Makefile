@@ -6,7 +6,7 @@ CC = gcc
 
 FLAGS = -Wall -Wextra -g
 
-FLAGS_DATARACE = -fsanitize=thread -g
+#FLAGS_DATARACE = -fsanitize=thread -g
 
 all: $(NAME)
 

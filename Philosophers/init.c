@@ -6,7 +6,7 @@
 /*   By: spalta <spalta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 19:09:47 by serif             #+#    #+#             */
-/*   Updated: 2023/04/09 21:17:03 by spalta           ###   ########.fr       */
+/*   Updated: 2023/04/09 21:21:40 by spalta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	init_thread(char **av, t_philo	*philo)
 		if (check_dead(philo) == 1)
 		{
 			//pthread_mutex_unlock(philo->die);
-			pthread_mutex_unlock(philo->oc);
+			//pthread_mutex_unlock(philo->oc);
 			usleep(50);
 			return (-1);
 		}

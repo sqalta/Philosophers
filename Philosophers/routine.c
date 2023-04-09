@@ -6,7 +6,7 @@
 /*   By: spalta <spalta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 16:14:30 by spalta            #+#    #+#             */
-/*   Updated: 2023/04/09 21:15:20 by spalta           ###   ########.fr       */
+/*   Updated: 2023/04/09 21:21:48 by spalta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,12 +67,13 @@ int	check_dead(t_philo	*philo)
 				return (1);
 		}
 		else
+		{
 			if (is_dead(&philo[i], 2))
 			{
-				//pthread_mutex_lock(philo->die);
-				pthread_mutex_lock(philo->oc);
+				//pthread_mutex_lock(philo->oc);
 				return (1);
 			}
+		}
 		i++;
 	}
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: serif <serif@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 19:09:47 by serif             #+#    #+#             */
-/*   Updated: 2023/04/09 02:29:26 by serif            ###   ########.fr       */
+/*   Updated: 2023/04/09 03:55:06 by serif            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ int	init_philo(int ac, char **av, t_philo	*philo, t_mutex *mutex, pthread_mutex_
 
 	i = 0;
 	flag_die = 0;
-	print_die = 1;
 	while (mutex->number == ph_atoi(av[1]))
 		mutex = mutex->next;
 	while (i < ph_atoi(av[1]))

@@ -6,7 +6,7 @@
 /*   By: serif <serif@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 15:50:10 by serif             #+#    #+#             */
-/*   Updated: 2023/04/09 02:28:42 by serif            ###   ########.fr       */
+/*   Updated: 2023/04/09 03:58:04 by serif            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@
 # include <pthread.h>
 # include <sys/time.h>
 # include <unistd.h>
-
-int print_die;
 
 typedef struct s_mutex
 {
@@ -41,10 +39,8 @@ typedef struct s_philo
 	int				print_die;
 	int				must_eat;
 	int				first_meal;
-	time_t			start_sleep;
-	time_t			start_dinner;
-	time_t			start_meal;
-	time_t			last_meal;
+	long long		start_dinner;
+	long long		last_meal;
 	t_mutex			*target;
 	pthread_t		th;
 	pthread_mutex_t	*die;
@@ -59,7 +55,7 @@ int		check_dead(t_philo	*philo);
 void	add_mutex(t_mutex *head, t_mutex *new);
 t_mutex	*new_mutex(int i);
 t_mutex	*init_mutex(char **av, pthread_mutex_t *die);
-time_t	get_time();
+long long get_time();
 void 	*routine(void *av);
 
 #endif

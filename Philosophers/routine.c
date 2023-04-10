@@ -6,7 +6,7 @@
 /*   By: spalta <spalta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 16:14:30 by spalta            #+#    #+#             */
-/*   Updated: 2023/04/10 18:18:49 by spalta           ###   ########.fr       */
+/*   Updated: 2023/04/10 18:31:46 by spalta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ void	time_to_wait(t_philo *philo, int i)
 
 int	print_status(t_philo *philo, char *status)
 {
-	pthread_mutex_lock(philo->die);
+	//pthread_mutex_lock(philo->die);
 	printf("%lld %d %s\n", get_time() - philo->start_dinner, philo->id, status);
-	pthread_mutex_unlock(philo->die);
+	//pthread_mutex_unlock(philo->die);
 	return (1);
 }
 int	philo_eat(t_philo *philo)
@@ -93,6 +93,5 @@ void *routine(void *av)
 		if (philo_thinking(philo))
 			break;		
 	}
-	printf ("philo->die%d\n", *philo->flag_die);
 	return (NULL);
 }

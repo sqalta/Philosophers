@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   routine.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: spalta <spalta@student.42.fr>              +#+  +:+       +#+        */
+/*   By: serif <serif@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 16:14:30 by spalta            #+#    #+#             */
-/*   Updated: 2023/04/10 18:31:46 by spalta           ###   ########.fr       */
+/*   Updated: 2023/04/11 02:10:35 by serif            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,24 +27,22 @@ void	time_to_wait(t_philo *philo, int i)
 
 int	print_status(t_philo *philo, char *status)
 {
-	//pthread_mutex_lock(philo->die);
-	printf("%lld %d %s\n", get_time() - philo->start_dinner, philo->id, status);
-	//pthread_mutex_unlock(philo->die);
+	pthread_mutex_lock(philo->die);
+	if (*philo->flag_die == 0)
+		printf("%lld %d %s\n", get_time() - philo->start_dinner, philo->id, status);
+	pthread_mutex_unlock(philo->die);
 	return (1);
 }
+
 int	philo_eat(t_philo *philo)
 {
-	pthread_mutex_lock(philo->die);
-	if (*philo->flag_die == 1)
-		return (1);
-	pthread_mutex_unlock(philo->die);
 	pthread_mutex_lock(philo->target->fork);
 	print_status(philo, "has taken a fork");
 	pthread_mutex_lock(philo->target->next->fork);
 	print_status(philo, "has taken a fork");
 	print_status(philo, "is eating");
 	pthread_mutex_lock(philo->die);
-	philo->must_eat--;
+	philo->flag_eat++;
 	philo->last_meal = get_time();
 	pthread_mutex_unlock(philo->die);
 	time_to_wait(philo, 1);
@@ -55,13 +53,6 @@ int	philo_eat(t_philo *philo)
 
 int	philo_sleep(t_philo *philo)
 {
-	pthread_mutex_lock(philo->die);
-	if (*philo->flag_die == 1)
-	{
-		pthread_mutex_unlock(philo->die);
-		return (1);
-	}
-	pthread_mutex_unlock(philo->die);
 	print_status(philo, "is sleeping");
 	time_to_wait(philo, 2);
 	return (0);
@@ -69,14 +60,7 @@ int	philo_sleep(t_philo *philo)
 
 int	philo_thinking(t_philo *philo)
 {
-	pthread_mutex_lock(philo->die);
-	if (*philo->flag_die == 1)
-	{
-		pthread_mutex_unlock(philo->die);
-		return (1);
-	}
 	print_status(philo, "is thinking");
-	pthread_mutex_unlock(philo->die);
 	return (0);
 }
 void *routine(void *av)
@@ -84,14 +68,21 @@ void *routine(void *av)
 	t_philo 	*philo;
 
 	philo = av;
+	if (philo->id % 2 == 0)
+		usleep(1000);
 	while(1)
 	{
+		pthread_mutex_lock(philo->die);
+		if (*philo->flag_die == 1)
+			break;
+		pthread_mutex_unlock(philo->die);
 		if (philo_eat(philo))
 			break;
 		if (philo_sleep(philo))
 			break;
 		if (philo_thinking(philo))
-			break;		
+			break;
 	}
+	pthread_mutex_unlock(philo->die);
 	return (NULL);
 }

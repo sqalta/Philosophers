@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: spalta <spalta@student.42.fr>              +#+  +:+       +#+        */
+/*   By: serif <serif@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 15:50:10 by serif             #+#    #+#             */
-/*   Updated: 2023/04/10 17:11:57 by spalta           ###   ########.fr       */
+/*   Updated: 2023/04/11 01:20:38 by serif            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,6 @@
 typedef struct s_mutex
 {
 	pthread_mutex_t *fork;
-	pthread_mutex_t *last_meal;
-	pthread_mutex_t *must_eat;
 	struct s_mutex 	*next;
 	int				number;
 }					t_mutex;
@@ -36,11 +34,9 @@ typedef struct s_philo
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				flag_eat;
-	int				flag_sleep;
-	int				*flag_die;
-	int				print_die;
 	int				must_eat;
-	int				first_meal;
+	int				all_die;
+	int				*flag_die;
 	long long		start_dinner;
 	long long		last_meal;
 	t_mutex			*target;

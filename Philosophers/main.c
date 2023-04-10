@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: spalta <spalta@student.42.fr>              +#+  +:+       +#+        */
+/*   By: serif <serif@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 15:49:10 by serif             #+#    #+#             */
-/*   Updated: 2023/04/10 18:21:04 by spalta           ###   ########.fr       */
+/*   Updated: 2023/04/11 01:23:07 by serif            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,17 @@ int main (int ac, char **av)
 	philo = malloc(sizeof(t_philo) * ph_atoi(av[1]));
 	die = malloc(sizeof(pthread_mutex_t));
 	all_mutex = init_mutex(av, die);
-	if (init_philo(ac, av, philo, all_mutex, die))
+	init_philo(ac, av, philo, all_mutex, die);
+	int i = 0;
+	int	k = 0;
+	while (i < ph_atoi(av[1]))
+	{
+		philo[i].flag_die = &k;
+		i++;
+	}
+	if (init_thread(av, philo))
+	{
+		join_thread(av, philo);
 		return (0);
-	if (init_thread(av, philo) == -1)
-		return (0);
+	}
 }

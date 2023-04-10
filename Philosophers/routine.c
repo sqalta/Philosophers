@@ -6,7 +6,7 @@
 /*   By: spalta <spalta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 16:14:30 by spalta            #+#    #+#             */
-/*   Updated: 2023/04/10 18:05:21 by spalta           ###   ########.fr       */
+/*   Updated: 2023/04/10 18:18:49 by spalta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,10 @@ int	print_status(t_philo *philo, char *status)
 }
 int	philo_eat(t_philo *philo)
 {
+	pthread_mutex_lock(philo->die);
+	if (*philo->flag_die == 1)
+		return (1);
+	pthread_mutex_unlock(philo->die);
 	pthread_mutex_lock(philo->target->fork);
 	print_status(philo, "has taken a fork");
 	pthread_mutex_lock(philo->target->next->fork);
@@ -46,12 +50,35 @@ int	philo_eat(t_philo *philo)
 	time_to_wait(philo, 1);
 	pthread_mutex_unlock(philo->target->next->fork);
 	pthread_mutex_unlock(philo->target->fork);
-	print_status(philo, "is sleeping");
-	time_to_wait(philo, 2);
-	print_status(philo, "is thinking");
 	return(0);
 }
 
+int	philo_sleep(t_philo *philo)
+{
+	pthread_mutex_lock(philo->die);
+	if (*philo->flag_die == 1)
+	{
+		pthread_mutex_unlock(philo->die);
+		return (1);
+	}
+	pthread_mutex_unlock(philo->die);
+	print_status(philo, "is sleeping");
+	time_to_wait(philo, 2);
+	return (0);
+}
+
+int	philo_thinking(t_philo *philo)
+{
+	pthread_mutex_lock(philo->die);
+	if (*philo->flag_die == 1)
+	{
+		pthread_mutex_unlock(philo->die);
+		return (1);
+	}
+	print_status(philo, "is thinking");
+	pthread_mutex_unlock(philo->die);
+	return (0);
+}
 void *routine(void *av)
 {
 	t_philo 	*philo;
@@ -61,6 +88,11 @@ void *routine(void *av)
 	{
 		if (philo_eat(philo))
 			break;
+		if (philo_sleep(philo))
+			break;
+		if (philo_thinking(philo))
+			break;		
 	}
+	printf ("philo->die%d\n", *philo->flag_die);
 	return (NULL);
 }

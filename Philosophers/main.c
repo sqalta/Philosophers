@@ -6,7 +6,7 @@
 /*   By: spalta <spalta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 15:49:10 by serif             #+#    #+#             */
-/*   Updated: 2023/04/10 17:50:42 by spalta           ###   ########.fr       */
+/*   Updated: 2023/04/10 18:21:04 by spalta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,5 @@ int main (int ac, char **av)
 	if (init_philo(ac, av, philo, all_mutex, die))
 		return (0);
 	if (init_thread(av, philo) == -1)
-	{
-		ft_free(philo, all_mutex, die);
 		return (0);
-	}
 }

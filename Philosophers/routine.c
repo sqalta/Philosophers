@@ -6,7 +6,7 @@
 /*   By: spalta <spalta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 16:14:30 by spalta            #+#    #+#             */
-/*   Updated: 2023/04/09 21:21:48 by spalta           ###   ########.fr       */
+/*   Updated: 2023/04/10 14:43:40 by spalta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,7 @@ int	is_dead(t_philo *philo, int i)
 	else if (i == 2)
 	{
 		if ((get_time() - philo->last_meal) > philo->time_to_die)
-			{
 				*philo->flag_die = 1;
-			}
 		if (philo->must_eat == 0)
 		{
 			pthread_mutex_unlock(philo->die);
@@ -70,7 +68,7 @@ int	check_dead(t_philo	*philo)
 		{
 			if (is_dead(&philo[i], 2))
 			{
-				//pthread_mutex_lock(philo->oc);
+				pthread_mutex_lock(philo->mut);
 				return (1);
 			}
 		}
@@ -93,29 +91,27 @@ int	philo_eat(t_philo *philo)
 	print_status(philo, "has taken a fork");
 	print_status(philo, "is eating");
 	pthread_mutex_lock(philo->die);
-//	pthread_mutex_lock(philo->meal_mutex);
+	pthread_mutex_lock(philo->meal_mutex);
 	philo->first_meal = 0;
 	philo->must_eat--;
-//	pthread_mutex_unlock(philo->meal_mutex);
+	pthread_mutex_unlock(philo->meal_mutex);
 	philo->last_meal = get_time();
 	pthread_mutex_unlock(philo->die);
 	time_to_wait(philo, 1);
 	pthread_mutex_unlock(philo->target->next->fork);
 	pthread_mutex_unlock(philo->target->fork);
+	print_status(philo, "is sleeping");
 	return(0);
 }
 
-int	philo_sleep(t_philo *philo)
+void	philo_sleep(t_philo *philo)
 {
-	print_status(philo, "is sleeping");
 	time_to_wait(philo, 2);
-	return(1);
 }
 
-int	philo_thinking(t_philo *philo)
+void	philo_thinking(t_philo *philo)
 {
 	print_status(philo, "is thinking");
-	return(1);
 }
 void *routine(void *av)
 {

@@ -4,16 +4,16 @@ SRC = main.c control_input.c init.c mutex.c routine.c time.c
 
 CC = gcc
 
-FLAGS = -Wall -Wextra -g
+FLAGS = -Wall -Wextra -g 
 
-#FLAGS_DATARACE = -fsanitize=thread -g
+FLAGS_DATARACE = -fsanitize=thread -g
 
 all: $(NAME)
 
 $(NAME): $(SRC)
 	$(CC) $(FLAGS) $(SRC) -o $(NAME)
 
-data races:
+data_race:
 	$(CC) $(FLAGS_DATARACE) $(SRC) -o $(NAME)
 
 fclean:

@@ -6,7 +6,7 @@
 /*   By: spalta <spalta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 16:14:30 by spalta            #+#    #+#             */
-/*   Updated: 2023/04/10 16:46:26 by spalta           ###   ########.fr       */
+/*   Updated: 2023/04/10 18:05:21 by spalta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,9 @@ void	time_to_wait(t_philo *philo, int i)
 
 int	print_status(t_philo *philo, char *status)
 {
+	pthread_mutex_lock(philo->die);
 	printf("%lld %d %s\n", get_time() - philo->start_dinner, philo->id, status);
+	pthread_mutex_unlock(philo->die);
 	return (1);
 }
 int	philo_eat(t_philo *philo)
@@ -45,17 +47,9 @@ int	philo_eat(t_philo *philo)
 	pthread_mutex_unlock(philo->target->next->fork);
 	pthread_mutex_unlock(philo->target->fork);
 	print_status(philo, "is sleeping");
-	return(0);
-}
-
-void	philo_sleep(t_philo *philo)
-{
 	time_to_wait(philo, 2);
-}
-
-void	philo_thinking(t_philo *philo)
-{
 	print_status(philo, "is thinking");
+	return(0);
 }
 
 void *routine(void *av)
@@ -67,8 +61,6 @@ void *routine(void *av)
 	{
 		if (philo_eat(philo))
 			break;
-		philo_sleep(philo);
-		philo_thinking(philo);
 	}
 	return (NULL);
 }

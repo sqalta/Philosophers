@@ -6,7 +6,7 @@
 /*   By: spalta <spalta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 15:50:10 by serif             #+#    #+#             */
-/*   Updated: 2023/04/10 15:56:28 by spalta           ###   ########.fr       */
+/*   Updated: 2023/04/10 17:11:57 by spalta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ typedef struct s_philo
 	t_mutex			*target;
 	pthread_t		th;
 	pthread_mutex_t	*die;
-	pthread_mutex_t	*mut;
 	pthread_mutex_t	*meal_mutex;
 } 					t_philo;
 

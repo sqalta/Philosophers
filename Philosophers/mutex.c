@@ -6,7 +6,7 @@
 /*   By: spalta <spalta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 17:32:47 by spalta            #+#    #+#             */
-/*   Updated: 2023/04/10 15:57:06 by spalta           ###   ########.fr       */
+/*   Updated: 2023/04/10 17:01:26 by spalta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,18 +25,10 @@ void	add_mutex(t_mutex *head, t_mutex *new)
 t_mutex	*new_mutex(int i)
 {
 	t_mutex *new;
-	pthread_mutex_t	*must_eat;
-	pthread_mutex_t	*last_meal;
 	
 	new = malloc(sizeof(t_mutex));
-	must_eat = malloc(sizeof(pthread_mutex_t));
-	last_meal = malloc(sizeof(pthread_mutex_t));
 	new->fork = malloc(sizeof(pthread_mutex_t));
-	new->must_eat = must_eat;
-	new->last_meal = last_meal;
 	pthread_mutex_init(new->fork, NULL);
-	pthread_mutex_init(new->must_eat, NULL);
-	pthread_mutex_init(new->last_meal, NULL);
 	new->number = i + 1;
 	new->next = NULL;
 	return (new);

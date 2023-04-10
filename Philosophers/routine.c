@@ -6,36 +6,41 @@
 /*   By: spalta <spalta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 16:14:30 by spalta            #+#    #+#             */
-/*   Updated: 2023/04/10 14:43:40 by spalta           ###   ########.fr       */
+/*   Updated: 2023/04/10 15:51:48 by spalta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	is_dead(t_philo *philo, int i)
+int	check_must_eat(t_philo *philo)
 {
-	pthread_mutex_lock(philo->die);
-	if (i == 1)
+	int i;
+	int j;
+
+	i = 0;
+	j = 0;
+	while (i < philo->total_philo)
 	{
-		if ((get_time() - philo->start_dinner) > philo->time_to_die)
-			*philo->flag_die = 1;
+		if (philo[i].must_eat == 0)
+			j++;
+		i++;
 	}
-	else if (i == 2)
+	if (i == j)
 	{
-		if ((get_time() - philo->last_meal) > philo->time_to_die)
-				*philo->flag_die = 1;
-		if (philo->must_eat == 0)
-		{
-			pthread_mutex_unlock(philo->die);
-			return (1);
-		}
-	}
-	pthread_mutex_unlock(philo->die);
-	if (*philo->flag_die == 1 && print_status(philo, "is dead"))
-	{
-		pthread_mutex_lock(philo->die);
+		pthread_mutex_lock(philo->mut);
 		return (1);
 	}
+	return (0);
+}
+
+int	is_dead(t_philo *philo)
+{
+	pthread_mutex_lock(philo->meal_mutex);
+	if ((get_time() - philo->last_meal) > philo->time_to_die)
+		*philo->flag_die = 1;
+	if (*philo->flag_die == 1 && print_status(philo, "is dead"))
+		return (1);
+	pthread_mutex_unlock(philo->meal_mutex);	
 	return (0);
 }
 
@@ -59,18 +64,10 @@ int	check_dead(t_philo	*philo)
 	i = 0;
 	while (i < philo->total_philo)
 	{
-		if (philo[i].first_meal)
+		if (is_dead(&philo[i]))
 		{
-			if (is_dead(&philo[i], 1))
-				return (1);
-		}
-		else
-		{
-			if (is_dead(&philo[i], 2))
-			{
-				pthread_mutex_lock(philo->mut);
-				return (1);
-			}
+			pthread_mutex_lock(philo->mut);
+			return (1);
 		}
 		i++;
 	}
@@ -94,8 +91,8 @@ int	philo_eat(t_philo *philo)
 	pthread_mutex_lock(philo->meal_mutex);
 	philo->first_meal = 0;
 	philo->must_eat--;
-	pthread_mutex_unlock(philo->meal_mutex);
 	philo->last_meal = get_time();
+	pthread_mutex_unlock(philo->meal_mutex);
 	pthread_mutex_unlock(philo->die);
 	time_to_wait(philo, 1);
 	pthread_mutex_unlock(philo->target->next->fork);

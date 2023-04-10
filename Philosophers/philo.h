@@ -6,7 +6,7 @@
 /*   By: spalta <spalta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 15:50:10 by serif             #+#    #+#             */
-/*   Updated: 2023/04/10 14:37:15 by spalta           ###   ########.fr       */
+/*   Updated: 2023/04/10 15:12:59 by spalta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,4 +60,5 @@ t_mutex	*init_mutex(char **av, pthread_mutex_t *die, pthread_mutex_t *meal_mutex
 long long get_time();
 void 	*routine(void *av);
 int	print_status(t_philo *philo, char *status);
+int	check_must_eat(t_philo *philo);
 #endif

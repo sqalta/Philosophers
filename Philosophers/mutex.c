@@ -6,7 +6,7 @@
 /*   By: spalta <spalta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 17:32:47 by spalta            #+#    #+#             */
-/*   Updated: 2023/04/09 21:12:18 by spalta           ###   ########.fr       */
+/*   Updated: 2023/04/10 14:55:24 by spalta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ t_mutex	*init_mutex(char **av, pthread_mutex_t *die, pthread_mutex_t *meal_mutex
 
 	i = 0;
 	pthread_mutex_init(meal_mutex, NULL);
-
 	pthread_mutex_init(die, NULL);
 	all_mutex = new_mutex(i);
 	while (i < (ph_atoi(av[1]) - 1))

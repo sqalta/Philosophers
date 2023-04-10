@@ -6,7 +6,7 @@
 /*   By: spalta <spalta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 15:50:10 by serif             #+#    #+#             */
-/*   Updated: 2023/04/10 15:12:59 by spalta           ###   ########.fr       */
+/*   Updated: 2023/04/10 15:56:28 by spalta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@
 typedef struct s_mutex
 {
 	pthread_mutex_t *fork;
+	pthread_mutex_t *last_meal;
+	pthread_mutex_t *must_eat;
 	struct s_mutex 	*next;
 	int				number;
 }					t_mutex;
@@ -50,13 +52,13 @@ typedef struct s_philo
 
 int		cntrl_input(int ac, char **av);
 long	ph_atoi(const char *str);
-int		init_philo(int ac, char **av, t_philo	*philo, t_mutex *mutex, pthread_mutex_t *die, pthread_mutex_t *first_meal);
+int		init_philo(int ac, char **av, t_philo	*philo, t_mutex *mutex, pthread_mutex_t *die);
 int		init_thread(char **av, t_philo	*philo);
 int		join_thread(char **av, t_philo	*philo);
 int		check_dead(t_philo	*philo);
 void	add_mutex(t_mutex *head, t_mutex *new);
 t_mutex	*new_mutex(int i);
-t_mutex	*init_mutex(char **av, pthread_mutex_t *die, pthread_mutex_t *meal_mutex);
+t_mutex	*init_mutex(char **av, pthread_mutex_t *die);
 long long get_time();
 void 	*routine(void *av);
 int	print_status(t_philo *philo, char *status);

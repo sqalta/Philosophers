@@ -6,7 +6,7 @@
 /*   By: spalta <spalta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 19:09:47 by serif             #+#    #+#             */
-/*   Updated: 2023/04/10 15:20:42 by spalta           ###   ########.fr       */
+/*   Updated: 2023/04/10 15:59:25 by spalta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	init_thread(char **av, t_philo	*philo)
 	return (0);
 }
 
-int	init_philo(int ac, char **av, t_philo	*philo, t_mutex *mutex, pthread_mutex_t *die, pthread_mutex_t *first_meal)
+int	init_philo(int ac, char **av, t_philo	*philo, t_mutex *mutex, pthread_mutex_t *die)
 {
 	int	i;
 	int	flag_die;
@@ -78,7 +78,6 @@ int	init_philo(int ac, char **av, t_philo	*philo, t_mutex *mutex, pthread_mutex_
 		philo[i].last_meal = get_time();
 		philo[i].total_philo = ph_atoi(av[1]);
 		philo[i].die = die;
-		philo[i].meal_mutex = first_meal;
 		mutex = mutex->next;
 		i++;
 	}

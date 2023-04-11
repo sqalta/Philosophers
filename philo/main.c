@@ -6,11 +6,12 @@
 /*   By: spalta <spalta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 15:49:10 by serif             #+#    #+#             */
-/*   Updated: 2023/04/11 16:42:28 by spalta           ###   ########.fr       */
+/*   Updated: 2023/04/11 16:48:17 by spalta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
 void	ft_free(t_philo *philo, t_mutex *mutex, pthread_mutex_t *die)
 {
 	int	i;
@@ -35,7 +36,7 @@ int	main(int ac, char **av)
 	t_mutex			*all_mutex;
 	pthread_mutex_t	*die;
 	int				i;
-	int				k;
+	int				flag;
 
 	if (cntrl_input(ac, av) == 0)
 	{
@@ -45,14 +46,13 @@ int	main(int ac, char **av)
 	philo = malloc(sizeof(t_philo) * ph_atoi(av[1]));
 	die = malloc(sizeof(pthread_mutex_t));
 	all_mutex = init_mutex(av, die);
-	init_philo(ac, av, philo, all_mutex, die);
+	init_philo(ac, av, philo, all_mutex);
+	init_die(av, philo, die);
 	i = -1;
-	k = 0;
+	flag = 0;
 	while (++i < ph_atoi(av[1]))
-		philo[i].flag_die = &k;
-	if (init_thread(av, philo))
-	{
-		join_thread(av, philo);
-		return (0);
-	}
+		philo[i].flag_die = &flag;
+	init_thread(av, philo);
+	join_thread(av, philo);
+	return (0);
 }

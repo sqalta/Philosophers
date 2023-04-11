@@ -6,7 +6,7 @@
 /*   By: serif <serif@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 16:00:02 by spalta            #+#    #+#             */
-/*   Updated: 2023/04/11 02:08:26 by serif            ###   ########.fr       */
+/*   Updated: 2023/04/11 03:18:10 by serif            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ int	check_dead(t_philo	*philo)
 		if (is_dead(&philo[i]))
 		{
 			pthread_mutex_unlock(philo->die);
+			print_status(philo, "is dead", 1);
 			return (1);
 		}
 		pthread_mutex_unlock(philo->die);

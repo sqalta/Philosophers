@@ -6,7 +6,7 @@
 /*   By: serif <serif@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 19:09:47 by serif             #+#    #+#             */
-/*   Updated: 2023/04/11 02:48:39 by serif            ###   ########.fr       */
+/*   Updated: 2023/04/11 03:17:57 by serif            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,7 @@ int	init_thread(char **av, t_philo	*philo)
 	while (1)
 	{
 		if (check_dead(philo) == 1 || check_must_eat(philo))
-		{
-			print_status(philo, "is dead");
 			break ;
-		}
 	}
 	return (-1);
 }

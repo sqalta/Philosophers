@@ -6,7 +6,7 @@
 /*   By: serif <serif@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 15:50:10 by serif             #+#    #+#             */
-/*   Updated: 2023/04/11 02:48:52 by serif            ###   ########.fr       */
+/*   Updated: 2023/04/11 03:15:42 by serif            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,6 @@ t_mutex	*new_mutex(int i);
 t_mutex	*init_mutex(char **av, pthread_mutex_t *die);
 long long get_time();
 void 	*routine(void *av);
-int	print_status(t_philo *philo, char *status);
+int	print_status(t_philo *philo, char *status, int i);
 int	check_must_eat(t_philo *philo);
 #endif

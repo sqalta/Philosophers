@@ -6,7 +6,7 @@
 /*   By: spalta <spalta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 15:49:10 by serif             #+#    #+#             */
-/*   Updated: 2023/04/11 16:48:17 by spalta           ###   ########.fr       */
+/*   Updated: 2023/04/11 17:07:32 by spalta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ void	ft_free(t_philo *philo, t_mutex *mutex, pthread_mutex_t *die)
 	free(die);
 	free(philo);
 }
-
 
 int	main(int ac, char **av)
 {

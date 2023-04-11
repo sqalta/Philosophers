@@ -6,13 +6,11 @@
 /*   By: spalta <spalta@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 19:09:47 by serif             #+#    #+#             */
-/*   Updated: 2023/04/11 16:46:32 by spalta           ###   ########.fr       */
+/*   Updated: 2023/04/11 17:07:17 by spalta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-#include <unistd.h>
-
 
 int	join_thread(char **av, t_philo	*philo)
 {
